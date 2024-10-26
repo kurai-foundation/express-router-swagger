@@ -1,5 +1,6 @@
 import j2s from "joi-to-swagger"
 import { ISwaggerServer, TRegisteredBuilder } from "./types"
+import classNameToReadable from "./class-name-to-readable"
 
 export interface ISwaggerTransformerOptions {
   title?: string
@@ -31,7 +32,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
           "200": { description: "Successful response" },
           ...(routeMetadata.exceptions?.reduce((acc: any, E: any) => {
             const instance = new E()
-            acc[instance.code] = { description: instance.name }
+            acc[instance.code] = { description: classNameToReadable(instance.name) }
             return acc
           }, {}) || {})
         }
