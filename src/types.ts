@@ -2,9 +2,13 @@ import Joi from "joi"
 
 // Mock implementations
 
-export abstract class TException {
+export abstract class Exception {
   abstract code: number
   abstract name: string
+}
+
+export abstract class CustomResponse {
+  abstract code: number
 }
 
 export abstract class RouterBuilder {
@@ -12,7 +16,7 @@ export abstract class RouterBuilder {
     path: string,
     method: string,
     metadata: {
-      exceptions?: (new () => TException)[]
+      responses?: ((new () => Exception) | (new () => CustomResponse))[]
       description?: string
     } | null,
     schema?: ISchema | null
