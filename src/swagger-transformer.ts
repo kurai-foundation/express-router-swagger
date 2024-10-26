@@ -97,7 +97,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
       description: options.description || "Auto-generated Swagger documentation",
       version: options.version || "1.0.0"
     },
-    servers: options.servers || [{ url: "https://api.example.com" }],
+    servers: options.servers || [{ url: "http://127.0.0.1:3000" }],
     paths
   }
 }
