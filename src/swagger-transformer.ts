@@ -89,7 +89,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
           operationObject.responses[responseInstance.code] = {
             description: "Success response"
           }
-        } else if (response.code && response.name) {
+        } else if (responseInstance.code && responseInstance.name) {
           operationObject.responses[responseInstance.code] = {
             description: classNameToReadable(responseInstance.name)
           }
