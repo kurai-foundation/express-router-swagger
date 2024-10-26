@@ -12,6 +12,8 @@ export abstract class CustomResponse {
 }
 
 export abstract class RouterBuilder {
+  abstract readonly root: string
+
   abstract getRegisteredRoutes: () => {
     path: string,
     method: string,
@@ -30,8 +32,6 @@ export interface ISchema {
   query?: Joi.AnySchema,
   params?: Joi.AnySchema,
 }
-
-export type TRegisteredBuilder = { builder: RouterBuilder, path: string }
 
 // Swagger types
 

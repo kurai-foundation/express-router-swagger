@@ -1,5 +1,5 @@
 import j2s from "joi-to-swagger"
-import { ISwaggerServer, TRegisteredBuilder } from "./types"
+import { ISwaggerServer, RouterBuilder } from "./types"
 import classNameToReadable from "./class-name-to-readable"
 
 export interface ISwaggerTransformerOptions {
@@ -7,15 +7,15 @@ export interface ISwaggerTransformerOptions {
   description?: string
   version?: string
   servers?: ISwaggerServer[]
-  builders: TRegisteredBuilder[]
+  builders: RouterBuilder[]
 }
 
 export default function swaggerTransformer(options: ISwaggerTransformerOptions) {
   const paths: Record<string, any> = {}
 
   options.builders.forEach(builder => {
-    const rootPath = builder.path
-    builder.builder.getRegisteredRoutes().forEach(route => {
+    const rootPath = builder.root
+    builder.getRegisteredRoutes().forEach(route => {
       // Replace `:param` with `{param}` for Swagger compatibility
       const fullPath = `${ rootPath }${ route.path }`.replace(/:([a-zA-Z0-9_]+)\?/g, "{$1}")
       const method = route.method.toLowerCase()
