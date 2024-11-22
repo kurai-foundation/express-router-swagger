@@ -17,7 +17,9 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
     const rootPath = builder.root
     builder.getRegisteredRoutes().forEach((route) => {
       // Replace `:param` with `{param}` for Swagger compatibility
-      const fullPath = `${ rootPath }${ route.path }`.replace(/:([a-zA-Z0-9_]+)\?/g, "{$1}").replace(/\/{2,}/, "/")
+      let fullPath = `${ rootPath }${ route.path }`.replace(/:([a-zA-Z0-9_]+)\?/g, "{$1}").replace(/\/{2,}/, "/")
+      if (fullPath.slice(-1) === "/" && fullPath.length > 1) fullPath = fullPath.slice(0, -1)
+
       const method = route.method.toLowerCase()
 
       // Initialize path entry if it doesn't exist
