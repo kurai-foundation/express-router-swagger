@@ -9,6 +9,8 @@ export abstract class Exception {
 
 export abstract class CustomResponse {
   abstract code: number
+  abstract headers: Headers
+  abstract example?: any
 }
 
 export abstract class RouterBuilder {
@@ -18,6 +20,7 @@ export abstract class RouterBuilder {
     path: string,
     method: string,
     metadata: {
+      example?: any
       responses?: ((new () => Exception) | (new () => CustomResponse))[]
       description?: string
     } | null,
