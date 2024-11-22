@@ -100,14 +100,13 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
         if ([ "1", "2", "3" ].includes(String(responseInstance.code)[0])) {
           hasCustomResponse = true
           const contentType = responseInstance.headers?.get("content-type") ?? "application/json"
-          const isJson = contentType === "application/json"
 
           operationObject.responses[responseInstance.code] = {
             description: "Success response",
             headers: Object.keys(headers).length ? headers : undefined,
             content: {
               [contentType]: {
-                example: isJson ? {
+                example: !responseInstance.raw ? {
                   error: null,
                   content: responseInstance.example ?? "Response content"
                 } : responseInstance.example ?? "Response content"
