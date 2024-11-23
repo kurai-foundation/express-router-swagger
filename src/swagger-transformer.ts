@@ -65,7 +65,8 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
               name,
               in: "query",
               required: querySchema.required?.includes(name) ?? false,
-              schema: querySchema.properties![name]
+              schema: querySchema.properties![name],
+              description: querySchema.properties![name]?.description
             }))
           )
         }
