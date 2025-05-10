@@ -31,9 +31,10 @@ export abstract class RouterBuilder {
 // Common types
 
 export interface ISchema {
-  body?: Joi.AnySchema,
-  query?: Joi.AnySchema,
-  params?: Joi.AnySchema,
+  body?: Joi.AnySchema
+  query?: Joi.AnySchema
+  params?: Joi.AnySchema
+  headers?: Joi.AnySchema
 }
 
 // Swagger types

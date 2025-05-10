@@ -16,8 +16,8 @@
   "author": "Kurai Foundation",
   "license": "MIT",
   "devDependencies": {
-    "@types/swagger-ui-express": "^4.1.6",
     "@types/node": "^20.12.7",
+    "@types/swagger-ui-express": "^4.1.8",
     "typescript": "^5.6.3"
   },
   "files": [

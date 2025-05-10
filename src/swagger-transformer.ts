@@ -31,14 +31,27 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
       const operationObject: any = {
         summary: routeMetadata.description || `Endpoint for ${ method.toUpperCase() } ${ fullPath }`,
         operationId: `${ method }_${ fullPath.replace(/\//g, "_") }`,
-        tags: [ rootPath.replace(/\//g, "") ],
+        tags: [rootPath.replace(/\//g, "")],
         responses: {}
       }
 
       operationObject.parameters = []
 
       if (route.schema) {
-        const { query, params, body } = route.schema
+        const { query, params, body, headers } = route.schema
+
+        if (headers) {
+          const headersSchema = j2s(headers).swagger
+          Object.keys(headersSchema.properties || {}).forEach((name) => {
+            operationObject.parameters.push({
+              name: name.split("-").map(p => p[0].toUpperCase() + p.slice(1)).join("-"),
+              in: "header",
+              required: headersSchema.required?.includes(name) ?? false,
+              schema: headersSchema.properties![name],
+              description: headersSchema.properties![name].description
+            })
+          })
+        }
 
         // Handle path parameters
         if (params) {
@@ -92,7 +105,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
 
         // Extract headers if present
         if (responseInstance.headers) {
-          Object.entries(responseInstance.headers).forEach(([ key, value ]) => {
+          Object.entries(responseInstance.headers).forEach(([key, value]) => {
             headers[key] = {
               description: `Header: ${ key }`,
               schema: { type: typeof value === "string" ? "string" : typeof value }
@@ -100,7 +113,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
           })
         }
 
-        if ([ "1", "2", "3" ].includes(String(responseInstance.code)[0])) {
+        if (["1", "2", "3"].includes(String(responseInstance.code)[0])) {
           hasCustomResponse = true
           const contentType = responseInstance.headers?.get("content-type") ?? "application/json"
 
@@ -166,7 +179,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
       description: options.description || "Auto-generated Swagger documentation",
       version: options.version || "1.0.0"
     },
-    servers: options.servers || [ { url: "http://127.0.0.1:3000" } ],
+    servers: options.servers || [{ url: "http://127.0.0.1:3000" }],
     paths
   }
 }
