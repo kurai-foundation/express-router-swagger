@@ -1,16 +1,15 @@
 import Joi, { AnySchema } from "joi"
 import j2s from "joi-to-swagger"
-import { SecurityScheme } from "../../types"
 import { ISwaggerServer, RouteMetadata, RouterBuilder } from "./types"
 import classNameToReadable from "./class-name-to-readable"
 
 export interface ISwaggerTransformerOptions {
-  title?: string;
-  description?: string;
-  version?: string;
-  servers?: ISwaggerServer[];
-  builders: RouterBuilder[];
-  securitySchemas?: Record<string, SecurityScheme>;
+  title?: string
+  description?: string
+  version?: string
+  servers?: ISwaggerServer[]
+  builders: RouterBuilder[]
+  securitySchemas?: Record<string, any>
 }
 
 function withClassName<T = AnySchema>(schema: T): T {

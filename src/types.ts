@@ -29,7 +29,7 @@ export abstract class RouterBuilder {
   abstract getRegisteredRoutes: () => {
     path: string,
     method: string,
-    metadata: RouteMetadata | null,
+    metadata: RouteMetadata | null
     schema?: ISchema | null
   }[]
 }
