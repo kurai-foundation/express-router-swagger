@@ -97,7 +97,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
       const op: any = {
         summary: m.description ?? `Endpoint for ${ method.toUpperCase() } ${ fullPath }`,
         operationId,
-        tags: builder.tags?.length ? builder.tags : [rootPath.replace(/\/+/g, " ")],
+        tags: builder.tags?.length ? builder.tags : [rootPath.replace(/\/+/g, " ").trim()],
         responses: {},
         parameters: [],
         deprecated: m.deprecated
