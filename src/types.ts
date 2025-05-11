@@ -16,6 +16,8 @@ export abstract class CustomResponse {
 export abstract class RouterBuilder {
   abstract readonly root: string
 
+  abstract readonly tags?: string[]
+
   abstract getRegisteredRoutes: () => {
     path: string,
     method: string,
