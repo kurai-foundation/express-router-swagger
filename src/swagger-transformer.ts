@@ -31,7 +31,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
       const operationObject: any = {
         summary: routeMetadata.description || `Endpoint for ${ method.toUpperCase() } ${ fullPath }`,
         operationId: `${ method }_${ fullPath.replace(/\//g, "_") }`,
-        tags: [...builder.tags ?? [], rootPath.replace(/\/+/g, " ")].filter(Boolean),
+        tags: (builder.tags && builder.tags.length > 0) ? builder.tags : [rootPath.replace(/\/+/g, " ")],
         responses: {}
       }
 
