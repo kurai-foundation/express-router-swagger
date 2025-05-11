@@ -13,6 +13,14 @@ export abstract class CustomResponse {
   abstract example?: any
 }
 
+export interface RouteMetadata {
+  example?: any
+  responses?: ((new () => Exception) | (new () => CustomResponse))[]
+  description?: string
+  auth?: string[] | Record<string, string[]>
+  deprecated?: boolean
+}
+
 export abstract class RouterBuilder {
   abstract readonly root: string
 
@@ -21,11 +29,7 @@ export abstract class RouterBuilder {
   abstract getRegisteredRoutes: () => {
     path: string,
     method: string,
-    metadata: {
-      example?: any
-      responses?: ((new () => Exception) | (new () => CustomResponse))[]
-      description?: string
-    } | null,
+    metadata: RouteMetadata | null,
     schema?: ISchema | null
   }[]
 }

@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/kurai-foundation/express-router-swagger#readme",
   "dependencies": {
+    "defu": "^6.1.4",
     "joi": "^17.13.3",
     "joi-to-swagger": "^6.2.0"
   }
