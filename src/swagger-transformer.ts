@@ -61,8 +61,8 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
   }
 
   const pushParam = (paramObj: any, arr: any[]) => {
-    const { in: loc, name, required: req, ...rest } = paramObj
-    const sig = JSON.stringify(rest)
+    const { in: loc, name, ...rest } = paramObj
+    const sig = JSON.stringify([rest, name])
     if (paramCache.has(sig)) {
       arr.push({ $ref: `#/components/parameters/${ paramCache.get(sig) }` })
     }
