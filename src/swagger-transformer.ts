@@ -103,6 +103,14 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
         deprecated: m.deprecated
       }
 
+      const secHeaders = new Set<string>(
+        (op.security || []).flatMap((obj: any) => Object.keys(obj))
+          .filter((k: any) => components.securitySchemes[k]?.in === "header")
+          .map((k: any) => components.securitySchemes[k].name.split("-")
+            .map((p: any) => p[0].toUpperCase() + p.slice(1))
+            .join("-"))
+      )
+
       if (m.auth) {
         if (Array.isArray(m.auth))
           op.security = m.auth.map((s) => ({ [s]: [] }))
@@ -129,7 +137,7 @@ export default function swaggerTransformer(options: ISwaggerTransformerOptions) 
                 schema: props[name],
                 description: props[name].description
               }
-              pushParam(pObj, op.parameters)
+              if (!secHeaders.has(pObj.name)) pushParam(pObj, op.parameters)
             })
         }
 
